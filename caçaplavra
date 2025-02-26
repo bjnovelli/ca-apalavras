@@ -1,1 +1,90 @@
+import tkinter as tk
+import random
+import string
+
+# Configuração do tabuleiro
+TAMANHO = 10
+PALAVRAS = ["PYTHON", "JOGO", "CÓDIGO", "MATRIZ", "LÓGICA"]
+tabuleiro = [[' ' for _ in range(TAMANHO)] for _ in range(TAMANHO)]
+selecionadas = []
+
+def pode_inserir(palavra, x, y, direcao):
+    """Verifica se a palavra pode ser inserida no tabuleiro."""
+    if direcao == "H" and y + len(palavra) > TAMANHO:
+        return False
+    if direcao == "V" and x + len(palavra) > TAMANHO:
+        return False
+
+    return all(tabuleiro[x + (i if direcao == "V" else 0)][y + (i if direcao == "H" else 0)] in (' ', letra)
+               for i, letra in enumerate(palavra))
+
+def inserir_palavra(palavra):
+    """Insere palavras no tabuleiro."""
+    for _ in range(100):
+        direcao = random.choice(["H", "V"])
+        x, y = random.randint(0, TAMANHO - 1), random.randint(0, TAMANHO - 1)
+        if pode_inserir(palavra, x, y, direcao):
+            for i, letra in enumerate(palavra):
+                if direcao == "H":
+                    tabuleiro[x][y + i] = letra
+                else:
+                    tabuleiro[x + i][y] = letra
+            return True
+    return False
+
+# Inserir palavras no tabuleiro
+for palavra in PALAVRAS:
+    inserir_palavra(palavra)
+
+# Preencher espaços vazios com letras aleatórias
+for i in range(TAMANHO):
+    for j in range(TAMANHO):
+        if tabuleiro[i][j] == ' ':
+            tabuleiro[i][j] = random.choice(string.ascii_uppercase)
+
+# Criar interface gráfica com Tkinter
+root = tk.Tk()
+root.title("Caça-Palavras Interativo")
+
+# Criar variáveis de interface
+botoes = []
+selecionadas = []
+
+def selecionar_letra(x, y):
+    """Registra a seleção do usuário e verifica a palavra."""
+    botao = botoes[x][y]
+    if botao["bg"] == "lightblue":
+        botao.config(bg="white")
+        selecionadas.remove((x, y))
+    else:
+        botao.config(bg="lightblue")
+        selecionadas.append((x, y))
+
+    verificar_palavra()
+
+def verificar_palavra():
+    """Verifica se a seleção do usuário forma uma palavra válida."""
+    if len(selecionadas) < 2:
+        return
+    
+    palavra_selecionada = "".join(tabuleiro[x][y] for x, y in selecionadas)
+    palavra_reversa = palavra_selecionada[::-1]
+
+    if palavra_selecionada in PALAVRAS or palavra_reversa in PALAVRAS:
+        for x, y in selecionadas:
+            botoes[x][y].config(bg="green")
+        selecionadas.clear()
+
+# Criar botões do tabuleiro
+for i in range(TAMANHO):
+    linha_botoes = []
+    for j in range(TAMANHO):
+        btn = tk.Button(root, text=tabuleiro[i][j], width=4, height=2, font=("Arial", 14, "bold"), bg="white",
+                        command=lambda x=i, y=j: selecionar_letra(x, y))
+        btn.grid(row=i, column=j, padx=1, pady=1)
+        linha_botoes.append(btn)
+    botoes.append(linha_botoes)
+
+# Iniciar o loop do Tkinter
+root.mainloop()
 
