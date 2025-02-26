@@ -10,12 +10,13 @@ Calculadora do iPhone com Python: Com uma interface gráfica moderna utilizando 
 A biblioteca  FLET voltada em Python voltada para o desenvolvimento de interfaces gráficas.
 
 Resumo do Funcionamento
-1️⃣ Gera um tabuleiro de 10x10 e esconde palavras nele.
-2️⃣ Preenche os espaços vazios com letras aleatórias.
-3️⃣ O jogador clica nas letras para formar palavras.
-4️⃣ Se a palavra estiver na lista, fica verde e é considerada encontrada.
 
-Resumo das Bibliotecas Usadas
-Tkinter	:Criar interface gráfica (GUI)
-Random :	Gerar posições aleatórias e preencher o tabuleiro
-String	:Obter letras do alfabeto para o tabuleiro
+### <br>1️⃣ Gera um tabuleiro de 10x10 e esconde palavras nele.
+### <br>2️⃣ Preenche os espaços vazios com letras aleatórias.
+### <br>3️⃣ O jogador clica nas letras para formar palavras.
+### <br>4️⃣ Se a palavra estiver na lista, fica verde e é considerada encontrada.
+
+# Resumo das Bibliotecas Usadas
+### Tkinter	:Criar interface gráfica (GUI)
+### Random :	Gerar posições aleatórias e preencher o tabuleiro
+### String	:Obter letras do alfabeto para o tabuleiro
